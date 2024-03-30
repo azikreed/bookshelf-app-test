@@ -6,7 +6,9 @@ import { Theme } from "@mui/material/styles";
 const StyledButton = styled(Button)(({ theme }: { theme: Theme }) => ({
   padding: "10px 24px",
   background: theme.palette.primary.main,
-  ":hover": theme?.palette?.primary?.dark,
+  "&:hover": {
+    background: theme?.palette?.primary?.dark
+  },
   color: "white",
   textTransform: "revert",
   fontSize: '16px',
