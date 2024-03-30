@@ -13,7 +13,7 @@ export const AuthLayout = () => {
 
   const Content = styled("div")(({ theme }: { theme: Theme }) => ({
     padding: "48px 28px",
-    background: theme.palette.primary.light,
+    background: theme?.palette?.primary?.light,
     borderRadius: "12px",
     width: "430px",
     boxShadow: '0 4px 32px 0 rgba(51, 51, 51, 0.08)',

@@ -18,13 +18,13 @@ export const Form = styled("form")(() => ({
   marginBottom: "12px",
 }));
 
-export const Field = styled("form")(() => ({
+export const Field = styled("div")(() => ({
   display: "flex",
   flexDirection: "column",
   gap: "4px",
 }));
 
-export const Label = styled("form")(({theme}: {theme: Theme}) => ({
+export const Label = styled("label")(({theme}: {theme: Theme}) => ({
     color: theme.palette.secondary.main,
     fontSize: '14px',
     fontWeight: 500,
