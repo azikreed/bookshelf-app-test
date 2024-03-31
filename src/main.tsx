@@ -17,8 +17,8 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       // {
-      //   path: 'login',
-      //   element: <Login />,
+      //   path: 'create',
+      //   element: <CreatePopup />,
       // },
       // {
       //   path: 'register',
@@ -60,7 +60,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             backgroundRepeat: "no-repeat",
             backgroundSize: "unset",
             backgroundAttachment: "",
-            fontFamily: "Montserrat, sans-serif",
+            fontFamily: "Mulish, sans-serif",
             margin: 0,
             padding: 0
           },
