@@ -1,9 +1,17 @@
 import { CreatePopupProps } from "./CreatePopup.props";
 import { CustomButton } from "../Button/CustomButton";
-import { PopupBody, PopupFooter, PopupProvider, PopupTitle, StyledPopup } from "./styles";
+import {
+  PopupBody,
+  PopupFooter,
+  PopupForm,
+  PopupProvider,
+  PopupTitle,
+  StyledPopup,
+} from "./styles";
 import { FormEvent } from "react";
 import axios from "../../helpers/axiosInterceptor";
 import { BookResponse } from "../BookCard/BookCard.props";
+import { CustomInput } from "../Input/CustomInput";
 
 export interface CreateForm {
   isbn: {
@@ -38,25 +46,33 @@ export function CreatePopup({ onClose, ...props }: CreatePopupProps) {
   };
 
   return (
-      <StyledPopup {...props}>
-        <PopupTitle>
-          <p>Create a book</p>
-          <button>
-            <img src="/close_icon.svg" alt="close icon" onClick={onClose} />
-          </button>
-        </PopupTitle>
-        <PopupBody>
-          <p>ISBN</p>
-          <form onSubmit={submit}>
-            <input id="isbn" name="isbn" type="text" />
-            <PopupFooter>
-              <CustomButton appearance="transparent" onClick={onClose}>
-                Close
-              </CustomButton>
-              <CustomButton>Submit</CustomButton>
-            </PopupFooter>
-          </form>
-        </PopupBody>
-      </StyledPopup>
+    <StyledPopup {...props}>
+      <PopupTitle>
+        <p>Create a book</p>
+        <button>
+          <img src="/close_icon.svg" alt="close icon" onClick={onClose} />
+        </button>
+      </PopupTitle>
+      <PopupBody>
+        <p>ISBN</p>
+        <PopupForm onSubmit={submit}>
+          <div className="input_div">
+            <img src="/link_icon.svg" alt="" />
+            <CustomInput
+              id="isbn"
+              name="isbn"
+              type="text"
+              placeholder="_____________"
+            />
+          </div>
+          <PopupFooter>
+            <CustomButton appearance="transparent" onClick={onClose}>
+              Close
+            </CustomButton>
+            <CustomButton>Submit</CustomButton>
+          </PopupFooter>
+        </PopupForm>
+      </PopupBody>
+    </StyledPopup>
   );
 }

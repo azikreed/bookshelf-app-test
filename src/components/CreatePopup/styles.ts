@@ -1,13 +1,15 @@
 import { Theme, styled } from "@mui/material/styles";
 
-export const PopupProvider = styled("div")<{isOpen:boolean}>(({ isOpen }) => ({
-    display: isOpen ? 'block' : 'none',
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    position: 'absolute',
+export const PopupProvider = styled("div")<{ isOpen: boolean }>(
+  ({ isOpen }) => ({
+    display: isOpen ? "block" : "none",
+    width: "100%",
+    height: "100%",
+    backgroundColor: "rgba(0,0,0,0.5)",
+    position: "absolute",
     zIndex: 1,
-}));
+  })
+);
 
 export const StyledPopup = styled("div")(({ theme }: { theme: Theme }) => ({
   position: "absolute",
@@ -45,6 +47,7 @@ export const PopupTitle = styled("div")(({ theme }: { theme: Theme }) => ({
 export const PopupBody = styled("div")(({ theme }: { theme: Theme }) => ({
   display: "flex",
   flexDirection: "column",
+  width: "100%",
   p: {
     margin: 0,
     fontSize: "14px",
@@ -57,5 +60,23 @@ export const PopupFooter = styled("div")(({ theme }: { theme: Theme }) => ({
   justifyContent: "space-between",
   button: {
     width: "calc((100% - 12px) / 2)",
+  },
+}));
+
+export const PopupForm = styled("form")(({ theme }: { theme: Theme }) => ({
+  ".input_div": {
+    position: "relative",
+    img: {
+      position: "absolute",
+      top: '50%',
+      left: '16px',
+      opacity: '.5',
+      transform: 'translateY(-50%)'
+    },
+    input: {
+      width: "100%",
+      paddingLeft: '48px'
+    },
+    marginBottom: '28px'
   },
 }));
