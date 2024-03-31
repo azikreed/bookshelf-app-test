@@ -8,9 +8,9 @@ export function CustomButton({ children, appearance = 'default', ...props }: Cus
     background: `${appearance === 'default' ? theme?.palette?.primary?.main : 'transparent'}`,
     transition: '.7s',
     "&:hover": {
-      background: `${appearance === 'default' ? 'transparent' : theme?.palette?.primary?.main} `,
-      color: `${appearance === 'default' ? theme?.palette?.primary?.main : theme?.palette?.primary?.light}`,
-      border: `1px solid ${ appearance === 'default' ? theme?.palette?.primary?.main : 'transparent'}`,
+      background: `${appearance === 'default' ? theme?.palette?.primary?.dark : theme?.palette?.primary?.main} `,
+      color: `${appearance === 'default' ? theme?.palette?.primary?.light : theme?.palette?.primary?.light}`,
+      border: `1px solid transparent`,
     },
     border: `1px solid ${appearance === 'default' ? 'transparent' : theme?.palette?.primary?.main}`,
     color: `${appearance === 'default' ? theme?.palette?.primary?.light : theme?.palette?.primary?.main}`,
