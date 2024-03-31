@@ -16,5 +16,5 @@ export interface BookResponse {
 export interface BookCardProps extends HTMLAttributes<HTMLDivElement> {
     // children: ReactNode;
     data: BookResponse;
-    
+    onDelete: () => void;
 }
