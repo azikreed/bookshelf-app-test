@@ -55,7 +55,7 @@ export const Register = () => {
       console.log("confirmed");
       await sendLogin(name.value, email.value, key.value, secret.value);
     } else {
-      setErrorMessage(true); //Password mismatch
+      setErrorMessage(true);
       return;
     }
   };
@@ -75,9 +75,9 @@ export const Register = () => {
 
     try {
       const { data } = await axios.post<RegisterResponse>(`/signup`, user);
-      console.log(data);
       if(data.isOk) {
-        localStorage.setItem('secret_key', data.data.secret);
+        localStorage.setItem('key', data.data.key);
+        localStorage.setItem('secret', data.data.secret);
       };
     } catch (e) {
       setErrorMessage(true);
