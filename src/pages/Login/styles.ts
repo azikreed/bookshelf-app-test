@@ -1,5 +1,4 @@
-import { styled } from "@mui/material";
-import { Theme } from "@mui/material/styles";
+import { Theme, styled } from "@mui/material/styles";
 
 export const AuthPage = styled("div")(({ theme }: { theme: Theme }) => ({
   display: "flex",
@@ -41,4 +40,17 @@ export const Question = styled("p")(() => ({
     color: "#1B28BC",
     textDecoration: "none",
   },
+}));
+
+export const ErrorMessage = styled("div")(({theme}: {theme: Theme}) => ({
+  position: "absolute",
+  padding: '10px 20px',
+  left: '10px',
+  bottom: '10px',
+  background: theme.palette.error.main,
+  color: theme.palette.primary.light,
+  fontSize: "14px",
+  fontWeight: 400,
+  lineHeight: '120%',
+  borderRadius: '6px'
 }));
