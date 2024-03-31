@@ -19,28 +19,16 @@ import { BookResponse } from "../../components/BookCard/BookCard.props";
 import { CreatePopup } from "../../components/CreatePopup/CreatePopup";
 import { PopupProvider } from "../../components/CreatePopup/styles";
 
-const data = {
-  book: {
-    id: 21,
-    isbn: "9781118464465",
-    title: "Raspberry Pi User Guide",
-    cover: "http://url.to.book.cover",
-    author: "Eben Upton",
-    published: 2012,
-    pages: 221,
-  },
-  status: 2,
-};
-
 export interface AllBooksResponse {
-    data: BookResponse[];
-    isOk: boolean;
-    message: string;
+  data: BookResponse[];
+  isOk: boolean;
+  message: string;
 }
 
 export const Layout = () => {
   const [books, setBooks] = useState<BookResponse[] | null>([]);
   const [showCreatePopup, setShowCreatePopup] = useState(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const toggleCreatePopup = () => {
     setShowCreatePopup(!showCreatePopup);
@@ -52,16 +40,33 @@ export const Layout = () => {
 
   const getBooks = async () => {
     try {
-      const key = localStorage.getItem("key");
-      const res = await axios.get<AllBooksResponse>("/books", {
-        headers: {
-          key: key,
-        },
-      });
+      setLoading(true);
+      const res = await axios.get<AllBooksResponse>("/books");
       setBooks(res.data?.data);
     } catch (e) {
       console.log(e);
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const deleteBook = async (bookId: number) => {
+    try {
+      await axios.delete(`/books/${bookId}`);
+      setBooks(
+        (prevBooks) =>
+          prevBooks?.filter((book) => book.book.id !== bookId) || null
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const createBook = (newBook: BookResponse) => {
+    setBooks((prevBooks) => {
+      if (!prevBooks) return [newBook];
+      return [...prevBooks, newBook];
+    });
   };
 
   useEffect(() => {
@@ -70,52 +75,58 @@ export const Layout = () => {
 
   return (
     <>
-    <PopupProvider isOpen={showCreatePopup} onClick={closeCreatePopup}></PopupProvider>
-    <MainLayout>
-      <Navbar>
-        <Side>
-          <img src="/logo.svg" alt="logo of bookshelf" />
-          <div>
-            <img src="/search_icon.svg" alt="icon of search input" />
-            <CustomInput placeholder="Search for any training you want " />
-          </div>
-        </Side>
-        <Side>
-          <img src="/notify_icon.svg" alt="Icon of notification" />
-          <img
-            style={{ width: "32px", height: "32px" }}
-            src="/user_image.png"
-            alt="Icon of notification"
-          />
-        </Side>
-      </Navbar>
-      <LayoutBody>
-        <MainBody>
-          <MainTop>
-            <Headling>
-              You've got <span>7 book</span>
-            </Headling>
-            <CustomButton onClick={toggleCreatePopup}>
-              <img src="/plus_icon.svg" alt="icon of create book button" />
-              Create a book
-            </CustomButton>
-          </MainTop>
-          <MainBottom>
-            <p>Your books today</p>
-          </MainBottom>
-        </MainBody>
-        <Books>
+      {loading && <p>Loading...</p>}
+      <PopupProvider
+        isOpen={showCreatePopup}
+        onClick={closeCreatePopup}
+      ></PopupProvider>
+      <MainLayout>
+        <Navbar>
+          <Side>
+            <img src="/logo.svg" alt="logo of bookshelf" />
+            <div>
+              <img src="/search_icon.svg" alt="icon of search input" />
+              <CustomInput placeholder="Search for any training you want " />
+            </div>
+          </Side>
+          <Side>
+            <img src="/notify_icon.svg" alt="Icon of notification" />
+            <img
+              style={{ width: "32px", height: "32px" }}
+              src="/user_image.png"
+              alt="Icon of notification"
+            />
+          </Side>
+        </Navbar>
+        <LayoutBody>
+          <MainBody>
+            <MainTop>
+              <Headling>
+                You've got <span>7 book</span>
+              </Headling>
+              <CustomButton onClick={toggleCreatePopup}>
+                <img src="/plus_icon.svg" alt="icon of create book button" />
+                Create a book
+              </CustomButton>
+            </MainTop>
+            <MainBottom>
+              <p>Your books today</p>
+            </MainBottom>
+          </MainBody>
+          <Books>
             {books?.map((book) => (
-            <BookCard data={book}/>
+              <BookCard
+                key={book?.book?.id}
+                onDelete={() => deleteBook(book.book?.id)}
+                data={book}
+              />
             ))}
-        </Books>
-      </LayoutBody>
-      {showCreatePopup && (
-        <CreatePopup
-          onClose={closeCreatePopup}
-        />
-      )}
-    </MainLayout>
+          </Books>
+        </LayoutBody>
+        {showCreatePopup && (
+          <CreatePopup onCreate={createBook} onClose={closeCreatePopup} />
+        )}
+      </MainLayout>
     </>
   );
 };

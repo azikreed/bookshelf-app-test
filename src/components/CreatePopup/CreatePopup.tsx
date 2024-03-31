@@ -25,20 +25,22 @@ export interface CreateResponse {
   message: string;
 }
 
-export function CreatePopup({ onClose, ...props }: CreatePopupProps) {
+export function CreatePopup({ onClose, onCreate, ...props }: CreatePopupProps) {
   const submit = async (e: FormEvent) => {
     e.preventDefault();
     const target = e.target as typeof e.target & CreateForm;
     const { isbn } = target;
-    console.log(isbn);
     await sendCreate(isbn.value);
+    // onCreate();
   };
 
   const sendCreate = async (isbn: string) => {
-    const book = JSON.stringify({ isbn });
+    const bookData = JSON.stringify({ isbn });
 
     try {
-      const { data } = await axios.post<CreateResponse>("/books", book);
+      const {data} = await axios.post<CreateResponse>("/books", bookData);
+      onCreate(data);
+      onClose();
     } catch (e) {
       console.log(e);
       throw new Error();
