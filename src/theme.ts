@@ -1,6 +1,6 @@
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 
-const font = '"Mulish", sans-serif';
+const font = '"Montserrat", sans-serif';
 
 let theme = createTheme({
     palette: {
