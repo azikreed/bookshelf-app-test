@@ -5,6 +5,7 @@ import { Theme, styled } from "@mui/material/styles";
 export function CustomButton({ children, appearance = 'default', ...props }: CustomButtonProps) {
   const StyledButton = styled('button')(({ theme }: { theme: Theme }) => ({
     padding: "10px 24px",
+    cursor: 'pointer',
     background: `${appearance === 'default' ? theme?.palette?.primary?.main : 'transparent'}`,
     transition: '.7s',
     "&:hover": {
