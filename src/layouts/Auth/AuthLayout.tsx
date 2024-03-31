@@ -1,5 +1,4 @@
-import { styled } from "@mui/system";
-import { Theme } from "@mui/material/styles";
+import { Theme, styled } from "@mui/material/styles";
 import { Outlet } from "react-router-dom";
 
 export const AuthLayout = () => {

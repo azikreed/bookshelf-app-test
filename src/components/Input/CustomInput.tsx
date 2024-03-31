@@ -1,7 +1,6 @@
 import { Input } from "@mui/material";
 import { CustomInputProps } from "./CustomInput.props";
-import { styled } from "@mui/system";
-import { Theme } from "@mui/material/styles";
+import { Theme, styled } from "@mui/material/styles";
 
 export function CustomInput({ appearance = "default", ...props }: CustomInputProps) {
   const StyledInput = styled('input')(({ theme }: { theme: Theme }) => ({

@@ -1,5 +1,4 @@
-import { styled } from "@mui/material";
-import { Theme } from "@mui/material/styles";
+import { Theme, styled } from "@mui/material/styles";
 import { CustomButton } from "../../components/Button/CustomButton";
 import { Link, useLocation } from "react-router-dom";
 

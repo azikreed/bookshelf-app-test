@@ -1,7 +1,6 @@
 import { Typography } from "@mui/material";
 import { HeadlingProps } from "./Headling.props";
-import { styled } from "@mui/system";
-import { Theme } from "@mui/material/styles";
+import { Theme, styled } from "@mui/material/styles";
 
 const StyledTypography = styled(Typography)(({ theme }: { theme: Theme }) => ({
   color: theme?.palette?.secondary?.main,
