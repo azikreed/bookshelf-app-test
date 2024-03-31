@@ -8,15 +8,17 @@ axios.interceptors.request.use((config) => {
     const method = config.method?.toUpperCase();
 
     const url = config.url;
-    const requestBody = JSON.stringify(config.data) || "";
+    const requestBody = config.data || "";
 
     let signstr = "";
     if (method && url && url !== "/signup") {
-      signstr = method + url + requestBody + localStorage.getItem("secret_key") || 'alissecret4';
-      console.log(signstr);
+      signstr = method + url + requestBody + localStorage.getItem("secret");
+
+      config.headers.key = localStorage.getItem('key');
       config.headers.sign = CryptoJS.MD5(signstr).toString();
     } else {
-      localStorage.setItem("secret_key", config.data?.secret);
+      localStorage.setItem("secret", config.data?.secret);
+      localStorage.setItem("key", config.data?.key);
     }
 
     return config;
