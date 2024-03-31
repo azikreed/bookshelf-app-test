@@ -1,11 +1,9 @@
-import { Button } from "@mui/material";
 import { CustomButtonProps } from "./CustomButton.props";
-import { styled } from "@mui/system";
-import { Theme } from "@mui/material/styles";
+import { Theme, styled } from "@mui/material/styles";
 
 
 export function CustomButton({ children, appearance = 'default', ...props }: CustomButtonProps) {
-  const StyledButton = styled(Button)(({ theme }: { theme: Theme }) => ({
+  const StyledButton = styled('button')(({ theme }: { theme: Theme }) => ({
     padding: "10px 24px",
     background: `${appearance === 'default' ? theme?.palette?.primary?.main : 'transparent'}`,
     transition: '.7s',
@@ -21,12 +19,11 @@ export function CustomButton({ children, appearance = 'default', ...props }: Cus
     fontWeight: 500,
     fontFamily: theme?.typography?.fontFamily,
     display: 'flex',
-    gap: '12px',
+    justifyContent: 'center',
     alignItems: 'center',
-
+    gap: '12px',
+    borderRadius: '4px'
   }));
 
-  return <StyledButton {...props}>
-    {children}
-  </StyledButton>;
+  return <StyledButton {...props}>{children}</StyledButton>;
 }
