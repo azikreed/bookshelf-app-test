@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { CssBaseline, GlobalStyles } from "@mui/material";
-import { ThemeProvider } from "@mui/system";
+import { ThemeProvider } from "@mui/material/styles";
 import mainBack from "/main_back.png";
 import theme from "./theme";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
