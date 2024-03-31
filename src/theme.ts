@@ -15,6 +15,9 @@ let theme = createTheme({
         },
         text: {
             disabled: '#151515'
+        },
+        error: {
+            main: '#FF4D4F'
         }
     },
     typography: {
