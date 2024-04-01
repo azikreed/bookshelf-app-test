@@ -10,7 +10,7 @@ axios.interceptors.request.use((config) => {
     const url = config.url;
     let requestBody;
     if(config.data?.secret) {
-      requestBody = config.data.secret;
+      requestBody = "";
     } else {
       requestBody = config.data || "";
     }
