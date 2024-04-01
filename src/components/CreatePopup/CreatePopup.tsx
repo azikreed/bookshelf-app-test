@@ -39,7 +39,7 @@ export function CreatePopup({ onClose, onCreate, ...props }: CreatePopupProps) {
 
     try {
       const {data} = await axios.post<CreateResponse>("/books", bookData);
-      onCreate(data);
+      onCreate(data.data);
       onClose();
     } catch (e) {
       console.log(e);

@@ -1,3 +1,4 @@
+import { CircularProgress } from "@mui/material";
 import { Theme, styled  } from "@mui/material/styles";
 
 export const MainLayout = styled('div')(({theme}: {theme: Theme}) => ({
@@ -68,4 +69,11 @@ export const Books = styled('div')(({theme}: {theme: Theme}) => ({
     flexWrap: 'wrap',
     width: '100%',
     gap: '24px'
+}))
+
+export const Loader = styled(CircularProgress)(({theme}: {theme: Theme}) => ({
+    position: "absolute",
+    right: '80px',
+    bottom: '20px',
+    color: theme.palette.primary.main
 }))

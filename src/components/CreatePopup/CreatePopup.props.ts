@@ -1,7 +1,7 @@
 import { HTMLAttributes } from 'react';
-import { CreateResponse } from './CreatePopup';
+import { BookResponse } from '../BookCard/BookCard.props';
 
 export interface CreatePopupProps extends HTMLAttributes<HTMLElement> {
     onClose: () => void;
-    onCreate: (data: CreateResponse) => void;
+    onCreate: (data: BookResponse) => void;
 }

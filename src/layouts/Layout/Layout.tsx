@@ -1,10 +1,10 @@
-import { Typography } from "@mui/material";
 import { CustomButton } from "../../components/Button/CustomButton";
 import { Headling } from "../../components/Headling/Headling";
 import { CustomInput } from "../../components/Input/CustomInput";
 import {
   Books,
   LayoutBody,
+  Loader,
   MainBody,
   MainBottom,
   MainLayout,
@@ -39,13 +39,16 @@ export const Layout = () => {
   };
 
   const getBooks = async () => {
+    console.log("1 ============= ",loading);
     try {
+      console.log("2 ============= ",loading);
       setLoading(true);
       const res = await axios.get<AllBooksResponse>("/books");
       setBooks(res.data?.data);
     } catch (e) {
       console.log(e);
     } finally {
+      console.log("3 ============= ",loading);
       setLoading(false);
     }
   };
@@ -63,6 +66,7 @@ export const Layout = () => {
   };
 
   const createBook = (newBook: BookResponse) => {
+    getBooks();
     setBooks((prevBooks) => {
       if (!prevBooks) return [newBook];
       return [...prevBooks, newBook];
@@ -75,7 +79,6 @@ export const Layout = () => {
 
   return (
     <>
-      {loading && <p>Loading...</p>}
       <PopupProvider
         isOpen={showCreatePopup}
         onClick={closeCreatePopup}
@@ -102,7 +105,7 @@ export const Layout = () => {
           <MainBody>
             <MainTop>
               <Headling>
-                You've got <span>7 book</span>
+                You've got <span>{books?.length} {books && books?.length > 1 ? 'books' : 'book' }</span>
               </Headling>
               <CustomButton onClick={toggleCreatePopup}>
                 <img src="/plus_icon.svg" alt="icon of create book button" />
@@ -114,13 +117,17 @@ export const Layout = () => {
             </MainBottom>
           </MainBody>
           <Books>
-            {books?.map((book) => (
-              <BookCard
-                key={book?.book?.id}
-                onDelete={() => deleteBook(book.book?.id)}
-                data={book}
-              />
-            ))}
+            {loading ? (
+              <Loader />
+            ) : (
+              books?.map((book) => (
+                <BookCard
+                  key={book?.book?.id}
+                  onDelete={() => deleteBook(book.book?.id)}
+                  data={book}
+                />
+              ))
+            )}
           </Books>
         </LayoutBody>
         {showCreatePopup && (
