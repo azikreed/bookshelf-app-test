@@ -15,16 +15,6 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Layout />,
-    children: [
-      // {
-      //   path: 'create',
-      //   element: <CreatePopup />,
-      // },
-      // {
-      //   path: 'register',
-      //   element: <Register />,
-      // },
-    ],
   },
   {
     path: '/auth',
@@ -38,7 +28,6 @@ const router = createBrowserRouter([
         path: 'register',
         element: <Register />,
       },
-      // Добавьте другие маршруты здесь
     ],
   },
   {
