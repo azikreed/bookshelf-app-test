@@ -1,5 +1,5 @@
-import { InputHTMLAttributes, ReactNode } from 'react';
+import { InputHTMLAttributes } from 'react';
 
 export interface CustomInputProps extends InputHTMLAttributes<HTMLInputElement> {
-    appearance?: 'default' | 'search'
+    appearance?: 'default' | 'search';
 }

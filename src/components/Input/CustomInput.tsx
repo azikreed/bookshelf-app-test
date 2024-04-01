@@ -1,8 +1,8 @@
-import { Input } from "@mui/material";
 import { CustomInputProps } from "./CustomInput.props";
 import { Theme, styled } from "@mui/material/styles";
+import React from "react";
 
-export function CustomInput({ appearance = "default", ...props }: CustomInputProps) {
+export const CustomInput = React.forwardRef<HTMLInputElement, CustomInputProps>(({ appearance = "default", ...props }, ref) => {
   const StyledInput = styled('input')(({ theme }: { theme: Theme }) => ({
     padding: "14px 16px",
     background: "transparent",
@@ -23,5 +23,5 @@ export function CustomInput({ appearance = "default", ...props }: CustomInputPro
     }
   }));
 
-  return <StyledInput {...props}></StyledInput>;
-}
+  return <StyledInput ref={ref} {...props}></StyledInput>;
+})
