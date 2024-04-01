@@ -30,13 +30,13 @@ export const CardFooter = styled("div")(({ theme }: { theme: Theme }) => ({
   justifyContent: "space-between",
 }));
 
-export const CardActions = styled("div")(({ theme }: { theme: Theme }) => ({
+export const CardActions = styled("div")<{searched: boolean}>(({ theme, searched }: { theme: Theme, searched: boolean }) => ({
   opacity: 0,
   transition: "opacity 0.7s ease",
   position: "absolute",
   top: "16px",
   right: "-32px",
-  display: "flex",
+  display: searched ? 'none' : 'flex',
   flexDirection: "column",
   justifyContent: "space-between",
   gap: "2px",

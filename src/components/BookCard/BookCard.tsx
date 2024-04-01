@@ -1,4 +1,3 @@
-import { Theme, styled } from "@mui/material/styles";
 import { Headling } from "../Headling/Headling";
 import { BookCardProps } from "./BookCard.props";
 import { CustomButton } from "../Button/CustomButton";
@@ -12,13 +11,11 @@ export const statuses = {
   2: "Finished"
 };
 
-export const BookCard = ({ data, onDelete }: BookCardProps) => {
-  if(!data) {
-    return null;
-  }
-  
-  const { status, book } = data;
-  const [selectedStatus, setSelectedStatus] = useState<number>(status);
+export const BookCard = ({ data, searched, onDelete }: BookCardProps) => {  
+  const {status} = data || {};
+  const initialStatus = status !== undefined ? status : 0;
+
+  const [selectedStatus, setSelectedStatus] = useState<number>(initialStatus);
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLSelectElement>(null);
   const editButtonRef = useRef<HTMLButtonElement>(null);
@@ -26,9 +23,10 @@ export const BookCard = ({ data, onDelete }: BookCardProps) => {
   const handleStatusChange = async (newStatus: number) => {
     try {
       console.log({ status: newStatus });
-      const data = JSON.stringify({status: newStatus});
-      await axios.patch(`/books/${book.id}`, data);
+      const sendingData = JSON.stringify({status: newStatus});
+      const res = await axios.patch(`/books/${data?.book?.id}`, sendingData);
       setSelectedStatus(newStatus);
+      console.log(res.data);
     } catch (error) {
       console.error('Error updating status:', error);
     }
@@ -65,21 +63,21 @@ export const BookCard = ({ data, onDelete }: BookCardProps) => {
         appearance="small"
         style={{ fontFamily: '"Montserrat", sans-serif' }}
       >
-        {data?.book?.title}
+        {searched ? searched.title : data?.book?.title}
       </Headling>
       <CardBody>
-        <p>Cover: {book?.cover}</p>
-        <p>Pages: {book?.pages}</p>
-        <p>Published: {book?.published}</p>
-        <p>Isbn: {book?.isbn}</p>
+        <p>Cover: {searched ? searched.cover : data?.book?.cover}</p>
+        {searched ? <></> : <p>Pages: {data?.book?.pages}</p>}
+        <p>Published: {searched ? searched.published : data?.book?.published}</p>
+        <p>Isbn: {searched ? searched.isbn : data?.book?.isbn}</p>
       </CardBody>
       <CardFooter>
-        {book?.author}
-        <StatusBar selectedStatus={selectedStatus}>
+        {searched ? searched.author : data?.book?.author}
+        <StatusBar selectedStatus={selectedStatus} style={{display: searched ? 'none' : 'flex'}}>
           {selectedStatus === 0 ? statuses[0] : selectedStatus === 1 ? statuses[1] : statuses[2]}
         </StatusBar>
       </CardFooter>
-      <CardActions className="card-actions">
+      <CardActions searched={ searched ? true : false } className="card-actions">
         <CustomButton style={{background: '#FF4D4F', borderBottomLeftRadius: '0px'}} onClick={onDelete}>
           <img src="/trash_icon.svg" alt="" />
         </CustomButton>

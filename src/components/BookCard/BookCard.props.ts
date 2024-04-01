@@ -1,4 +1,5 @@
 import { HTMLAttributes, ReactNode} from 'react';
+import { SearchedBooks } from '../../layouts/Layout/Layout';
 
 export interface BookResponse {
     book: {
@@ -14,7 +15,7 @@ export interface BookResponse {
 }
 
 export interface BookCardProps extends HTMLAttributes<HTMLDivElement> {
-    // children: ReactNode;
-    data: BookResponse;
-    onDelete: () => void;
+    data?: BookResponse;
+    searched?: SearchedBooks
+    onDelete?: () => void;
 }
