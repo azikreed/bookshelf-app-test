@@ -1,6 +1,6 @@
 import { Theme, styled } from "@mui/material/styles";
 
-export const AuthPage = styled("div")(({ theme }: { theme: Theme }) => ({
+export const AuthPage = styled("div")(() => ({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
@@ -56,15 +56,19 @@ export const Question = styled("p")(() => ({
   },
 }));
 
-export const ErrorMessage = styled("div")(({ theme }: { theme: Theme }) => ({
+export const ErrorMessage = styled("div")<{color: string}>(({ theme, color }: { theme: Theme, color: string }) => ({
   position: "absolute",
   padding: "10px 20px",
-  left: "10px",
-  bottom: "10px",
-  background: theme.palette.error.main,
+  right: "50px",
+  bottom: "50px",
+  background: color,
   color: theme.palette.primary.light,
-  fontSize: "14px",
-  fontWeight: 400,
+  fontSize: "16px",
+  fontWeight: 500,
   lineHeight: "120%",
   borderRadius: "6px",
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: '12px'
 }));

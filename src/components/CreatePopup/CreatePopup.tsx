@@ -4,7 +4,6 @@ import {
   PopupBody,
   PopupFooter,
   PopupForm,
-  PopupProvider,
   PopupTitle,
   StyledPopup,
 } from "./styles";

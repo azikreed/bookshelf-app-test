@@ -27,7 +27,7 @@ export const StyledPopup = styled("div")(({ theme }: { theme: Theme }) => ({
   boxShadow: "0 4px 32px 0 rgba(51, 51, 51, 0.04)",
 }));
 
-export const PopupTitle = styled("div")(({ theme }: { theme: Theme }) => ({
+export const PopupTitle = styled("div")(() => ({
   p: {
     margin: 0,
     fontWeight: 600,
@@ -44,7 +44,7 @@ export const PopupTitle = styled("div")(({ theme }: { theme: Theme }) => ({
   },
 }));
 
-export const PopupBody = styled("div")(({ theme }: { theme: Theme }) => ({
+export const PopupBody = styled("div")(() => ({
   display: "flex",
   flexDirection: "column",
   width: "100%",
@@ -55,7 +55,7 @@ export const PopupBody = styled("div")(({ theme }: { theme: Theme }) => ({
   },
 }));
 
-export const PopupFooter = styled("div")(({ theme }: { theme: Theme }) => ({
+export const PopupFooter = styled("div")(() => ({
   display: "flex",
   justifyContent: "space-between",
   button: {
@@ -63,7 +63,7 @@ export const PopupFooter = styled("div")(({ theme }: { theme: Theme }) => ({
   },
 }));
 
-export const PopupForm = styled("form")(({ theme }: { theme: Theme }) => ({
+export const PopupForm = styled("form")(() => ({
   ".input_div": {
     position: "relative",
     img: {

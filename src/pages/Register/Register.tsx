@@ -2,7 +2,7 @@ import { Headling } from "../../components/Headling/Headling";
 import { CustomInput } from "../../components/Input/CustomInput";
 import { CustomButton } from "../../components/Button/CustomButton";
 import { AuthPage, ErrorMessage, Field, Form, Label, Question } from "../Login/styles";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FormEvent, useEffect, useState } from "react";
 import axios from "../../helpers/axiosInterceptor";
 import cn from "classnames";
@@ -11,6 +11,7 @@ import { RegisterForm, RegisterResponse } from "./interfaces";
 export const Register = () => {
   const [errorMessage, setErrorMessage] = useState(false);
   const [validate, setValidate] = useState(false);
+  const navigate = useNavigate();
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
@@ -19,6 +20,7 @@ export const Register = () => {
     console.log(validate);
     if (!name.value || !email.value || !key.value || !confirm?.value || !secret.value) {
       setValidate(true);
+      setErrorMessage(true);
       return;
     }
     if (key.value === confirm?.value) {
@@ -48,6 +50,7 @@ export const Register = () => {
       if(data.isOk) {
         localStorage.setItem('key', data.data.key);
         localStorage.setItem('secret', data.data.secret);
+        navigate('/');
       };
     } catch (e) {
       setErrorMessage(true);
@@ -78,7 +81,7 @@ export const Register = () => {
 
   return (
     <AuthPage>
-      {errorMessage ? <ErrorMessage>Something went wrong</ErrorMessage> : <></>}
+      {errorMessage ? <ErrorMessage color="#FF4D4F">Something went wrong</ErrorMessage> : <></>}
       <Headling>Sign up</Headling>
       <Form
         style={{ marginTop: "10px", marginBottom: "5px", gap: "8px" }}

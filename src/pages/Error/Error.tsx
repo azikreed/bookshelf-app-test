@@ -1,6 +1,6 @@
-import { Theme, styled } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import { CustomButton } from "../../components/Button/CustomButton";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 export const StyledError = styled("div")(() => ({
@@ -26,8 +26,6 @@ export const StyledButtons = styled("div")(() => ({
 }));
 
 export const ErrorPage = () => {
-    const location = useLocation();
-
   return (
     <StyledError>
         <img src="/error_page.png" alt="" />

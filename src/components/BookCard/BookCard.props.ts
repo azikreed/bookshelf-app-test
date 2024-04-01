@@ -1,5 +1,5 @@
-import { HTMLAttributes, ReactNode} from 'react';
-import { SearchedBooks } from '../../layouts/Layout/Layout';
+import { HTMLAttributes} from 'react';
+import { SearchedBooks } from '../../layouts/Layout/interfaces';
 
 export interface BookResponse {
     book: {

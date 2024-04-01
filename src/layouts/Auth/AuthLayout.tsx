@@ -2,7 +2,7 @@ import { Theme, styled } from "@mui/material/styles";
 import { Outlet } from "react-router-dom";
 
 export const AuthLayout = () => {
-  const Layout = styled("div")(({ theme }: { theme: Theme }) => ({
+  const Layout = styled("div")(() => ({
     height: '100vh',
     display: 'flex',
     flexDirection: 'column',

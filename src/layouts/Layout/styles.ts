@@ -1,13 +1,13 @@
 import { CircularProgress } from "@mui/material";
 import { Theme, styled } from "@mui/material/styles";
 
-export const MainLayout = styled("div")(({ theme }: { theme: Theme }) => ({
+export const MainLayout = styled("div")(() => ({
   padding: "0 100px",
   display: "flex",
   flexDirection: "column",
 }));
 
-export const Navbar = styled("nav")(({ theme }: { theme: Theme }) => ({
+export const Navbar = styled("nav")(() => ({
   padding: "12px 0",
   display: "flex",
   justifyContent: "space-between",
@@ -58,11 +58,11 @@ export const Side = styled("div")(({ theme }: { theme: Theme }) => ({
   },
 }));
 
-export const LayoutBody = styled("main")(({ theme }: { theme: Theme }) => ({
+export const LayoutBody = styled("main")(() => ({
   padding: "36px 0",
 }));
 
-export const MainBody = styled("div")(({ theme }: { theme: Theme }) => ({
+export const MainBody = styled("div")(() => ({
   display: "flex",
   flexDirection: "column",
   gap: "12px",
@@ -88,7 +88,7 @@ export const MainBottom = styled("div")(({ theme }: { theme: Theme }) => ({
   },
 }));
 
-export const Books = styled("div")(({ theme }: { theme: Theme }) => ({
+export const Books = styled("div")(() => ({
   padding: "36px 0",
   display: "flex",
   flexWrap: "wrap",
@@ -99,8 +99,8 @@ export const Books = styled("div")(({ theme }: { theme: Theme }) => ({
 export const Loader = styled(CircularProgress)(
   ({ theme }: { theme: Theme }) => ({
     position: "absolute",
-    right: "80px",
-    bottom: "20px",
+    right: "200px",
+    bottom: "50px",
     color: theme.palette.primary.main,
   })
 );

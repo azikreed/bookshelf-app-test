@@ -14,7 +14,7 @@ export const Card = styled("div")(({ theme }: { theme: Theme }) => ({
   boxShadow: "0 4px 24px 0 rgba(51, 51, 51, 0.08)",
 }));
 
-export const CardBody = styled("div")(({ theme }: { theme: Theme }) => ({
+export const CardBody = styled("div")(() => ({
   p: {
     margin: 0,
     whiteSpace: "nowrap",
@@ -25,12 +25,12 @@ export const CardBody = styled("div")(({ theme }: { theme: Theme }) => ({
   marginBottom: "20.5px",
 }));
 
-export const CardFooter = styled("div")(({ theme }: { theme: Theme }) => ({
+export const CardFooter = styled("div")(() => ({
   display: "flex",
   justifyContent: "space-between",
 }));
 
-export const CardActions = styled("div")<{searched: boolean}>(({ theme, searched }: { theme: Theme, searched: boolean }) => ({
+export const CardActions = styled("div")<{searched: boolean}>(({ searched }: { searched: boolean }) => ({
   opacity: 0,
   transition: "opacity 0.7s ease",
   position: "absolute",

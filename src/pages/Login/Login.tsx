@@ -26,23 +26,14 @@ export interface LoginResponse {
 export const Login = () => {
   const submit = async (e: FormEvent) => {
     e.preventDefault();
-    const target = e.target as typeof e.target & LoginForm;
-    const { name, key } = target;
-    await sendLogin(name.value, key.value);
-  };
-
-  const sendLogin = async (name: string, key: string) => {
     try {
-      const {data} = await axios.get<LoginResponse>(`/myself`, {
-        headers: {
-          key: key
-        }
-      })
+      const {data} = await axios.get<LoginResponse>(`/myself`)
       console.log(data);
     } catch (e) {
       console.log(e);
+      throw new Error();
     }
-	};
+  };
 
   return (
     <AuthPage>

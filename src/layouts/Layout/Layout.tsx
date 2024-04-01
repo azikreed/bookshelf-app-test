@@ -19,6 +19,7 @@ import { CreatePopup } from "../../components/CreatePopup/CreatePopup";
 import { PopupProvider } from "../../components/CreatePopup/styles";
 import { BookResponse } from "../../components/BookCard/BookCard.props";
 import { AllBooksResponse, AllSearchedBooks, SearchedBooks } from "./interfaces";
+import { ErrorMessage } from "../../pages/Login/styles";
 
 export const Layout = () => {
   const [books, setBooks] = useState<BookResponse[] | null>([]);
@@ -26,6 +27,7 @@ export const Layout = () => {
   const [showCreatePopup, setShowCreatePopup] = useState(false);
   const [inputText, setInputText] = useState("");
   const [loading, setLoading] = useState<boolean>(true);
+  const [errorMessage, setErrorMessage] = useState<boolean>(true);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -88,6 +90,7 @@ export const Layout = () => {
         (prevBooks) =>
           prevBooks?.filter((book) => book.book.id !== bookId) || null
       );
+      setErrorMessage(true);
     } catch (e) {
       console.log(e);
       throw new Error();
@@ -100,6 +103,7 @@ export const Layout = () => {
       if (!prevBooks) return [newBook];
       return [...prevBooks, newBook];
     });
+    setErrorMessage(true);
   };
 
   useEffect(() => {
@@ -113,6 +117,16 @@ export const Layout = () => {
     }
   },[inputText]);
 
+  useEffect(() => {
+    if (errorMessage === true) {
+      let timerId = setTimeout(() => {
+        setErrorMessage(false);
+      }, 3000);
+
+      return () => clearTimeout(timerId);
+    }
+  }, [errorMessage]);
+
   const clearInput = () => {
     setInputText('');
     setSearchedBooks([]);
@@ -121,6 +135,10 @@ export const Layout = () => {
 
   return (
     <>
+      {errorMessage ? <ErrorMessage color="#52C41A">
+        <img src="/check_icon.svg" alt="" />
+        Success
+      </ErrorMessage> : ''}
       <PopupProvider
         isOpen={showCreatePopup}
         onClick={closeCreatePopup}
