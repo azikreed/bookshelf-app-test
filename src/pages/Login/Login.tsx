@@ -4,7 +4,7 @@ import { CustomButton } from "../../components/Button/CustomButton";
 import { AuthPage, Field, Form, Label, Question } from "./styles";
 import { Link } from "react-router-dom";
 import { FormEvent } from "react";
-import axios from '../../helpers/axiosInterceptor'; // Импортируем наш модуль
+import axios from '../../helpers/axiosInterceptor';
 
 export interface LoginForm {
   name: {
