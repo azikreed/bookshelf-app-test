@@ -13,22 +13,52 @@ import {
   Side,
 } from "./styles";
 import { BookCard } from "../../components/BookCard/BookCard";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "../../helpers/axiosInterceptor";
-import { BookResponse } from "../../components/BookCard/BookCard.props";
 import { CreatePopup } from "../../components/CreatePopup/CreatePopup";
 import { PopupProvider } from "../../components/CreatePopup/styles";
-
-export interface AllBooksResponse {
-  data: BookResponse[];
-  isOk: boolean;
-  message: string;
-}
+import { BookResponse } from "../../components/BookCard/BookCard.props";
+import { AllBooksResponse, AllSearchedBooks, SearchedBooks } from "./interfaces";
 
 export const Layout = () => {
   const [books, setBooks] = useState<BookResponse[] | null>([]);
+  const [searchedBooks, setSearchedBooks] = useState<SearchedBooks[] | null>([]);
   const [showCreatePopup, setShowCreatePopup] = useState(false);
+  const [inputText, setInputText] = useState("");
   const [loading, setLoading] = useState<boolean>(true);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputText(e.target.value);
+  };
+
+  const handleEnterKeyPress = async (
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (e.key === "Enter") {
+      try {
+        setLoading(true);
+        if (inputText.trim() === '') {
+          getBooks();
+        } else {
+          const res = await axios.get<AllSearchedBooks>(`/books/${inputText}`);
+          setSearchedBooks(res.data?.data || []);
+        }
+      } catch (error) {
+        console.error("Error fetching books:", error);
+        throw new Error();
+      } finally {
+        setLoading(false);
+        e.currentTarget.blur();
+      }
+    }
+  };
 
   const toggleCreatePopup = () => {
     setShowCreatePopup(!showCreatePopup);
@@ -39,16 +69,14 @@ export const Layout = () => {
   };
 
   const getBooks = async () => {
-    console.log("1 ============= ",loading);
     try {
-      console.log("2 ============= ",loading);
       setLoading(true);
       const res = await axios.get<AllBooksResponse>("/books");
-      setBooks(res.data?.data);
+      setBooks(res.data?.data || []);
     } catch (e) {
       console.log(e);
+      throw new Error();
     } finally {
-      console.log("3 ============= ",loading);
       setLoading(false);
     }
   };
@@ -62,6 +90,7 @@ export const Layout = () => {
       );
     } catch (e) {
       console.log(e);
+      throw new Error();
     }
   };
 
@@ -77,6 +106,19 @@ export const Layout = () => {
     getBooks();
   }, []);
 
+  useEffect(() => {
+    if(inputText.trim() === '') {
+      setSearchedBooks([]);
+      getBooks();
+    }
+  },[inputText]);
+
+  const clearInput = () => {
+    setInputText('');
+    setSearchedBooks([]);
+    getBooks();
+  }
+
   return (
     <>
       <PopupProvider
@@ -89,7 +131,14 @@ export const Layout = () => {
             <img src="/logo.svg" alt="logo of bookshelf" />
             <div>
               <img src="/search_icon.svg" alt="icon of search input" />
-              <CustomInput placeholder="Search for any training you want " />
+              <CustomInput
+                ref={inputRef}
+                value={inputText}
+                onChange={handleInputChange}
+                onKeyDown={handleEnterKeyPress}
+                placeholder="Search for any training you want "
+              />
+              <img src="/close_icon.svg" alt="close icon" className="close" onClick={clearInput} />
             </div>
           </Side>
           <Side>
@@ -105,7 +154,11 @@ export const Layout = () => {
           <MainBody>
             <MainTop>
               <Headling>
-                You've got <span>{books?.length} {books && books?.length > 1 ? 'books' : 'book' }</span>
+              {searchedBooks?.length ? 'Founded' : 'You\'ve got'}{" "}
+                <span>
+                  {searchedBooks?.length ? searchedBooks?.length : books?.length}{" "}
+                  {(searchedBooks && searchedBooks?.length > 1) || (books && books?.length > 1)  ? "books" : "book"}
+                </span>
               </Headling>
               <CustomButton onClick={toggleCreatePopup}>
                 <img src="/plus_icon.svg" alt="icon of create book button" />
@@ -120,6 +173,12 @@ export const Layout = () => {
             {loading ? (
               <Loader />
             ) : (
+              searchedBooks?.length ? searchedBooks.map((book: SearchedBooks) => (
+                <BookCard
+                  key={book.isbn}
+                  searched={book}
+                />
+              )) :
               books?.map((book) => (
                 <BookCard
                   key={book?.book?.id}
