@@ -2,12 +2,12 @@ import { Headling } from "../../components/Headling/Headling";
 import { CustomInput } from "../../components/Input/CustomInput";
 import { CustomButton } from "../../components/Button/CustomButton";
 import { AuthPage, Field, Form, Label, Question } from "./styles";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FormEvent } from "react";
-import axios from '../../helpers/axiosInterceptor';
+import axios from "../../helpers/axiosInterceptor";
 
 export interface LoginForm {
-  name: {
+  secret: {
     value: string;
   };
   key: {
@@ -16,19 +16,39 @@ export interface LoginForm {
 }
 
 export interface LoginResponse {
-  id: number;
-  name: string;
-  email: string;
-  key: string;
-  secret: string;
+  data: {
+    id: number;
+    name: string;
+    email: string;
+    key: string;
+    secret: string;
+  },
+  isOk: number;
+  message: string;
 }
 
 export const Login = () => {
+  const navigate = useNavigate();
   const submit = async (e: FormEvent) => {
     e.preventDefault();
+    const target = e.target as typeof e.target & LoginForm;
+    const { key, secret } = target;
+    await sendLogin(secret.value, key.value);
+  };
+
+  const sendLogin = async (secret: string, key: string) => {
     try {
-      const {data} = await axios.get<LoginResponse>(`/myself`)
-      console.log(data);
+      const { data } = await axios.get<LoginResponse>(`/myself`, {
+        data: { secret },
+        headers: {
+          key: key,
+        },
+      });
+      if (data?.isOk) {
+        localStorage.setItem("key", data?.data.key);
+        localStorage.setItem("secret", data?.data.secret);
+        navigate('/');
+      }
     } catch (e) {
       console.log(e);
       throw new Error();
@@ -40,15 +60,16 @@ export const Login = () => {
       <Headling>Sign in</Headling>
       <Form onSubmit={submit}>
         <Field>
-          <Label htmlFor="name">Username</Label>
+          <Label htmlFor="name">Secret</Label>
           <CustomInput
-            id="name"
-            name="name"
-            placeholder="Enter your username"
+            id="secret"
+            name="secret"
+            type="password"
+            placeholder="Enter your secret"
           />
         </Field>
         <Field style={{ marginBottom: "20px" }}>
-          <Label htmlFor="key">Password</Label>
+          <Label htmlFor="key">Key</Label>
           <CustomInput
             id="key"
             name="key"

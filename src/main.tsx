@@ -10,11 +10,12 @@ import { Login } from "./pages/Login/Login";
 import { Register } from "./pages/Register/Register";
 import { ErrorPage } from "./pages/Error/Error";
 import { Layout } from "./layouts/Layout/Layout";
+import PrivateRoute from "./helpers/PrivateRoute";
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Layout />,
+    element: <PrivateRoute element={<Layout />}/>,
   },
   {
     path: '/auth',

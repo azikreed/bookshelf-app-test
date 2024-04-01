@@ -22,11 +22,9 @@ export const BookCard = ({ data, searched, onDelete }: BookCardProps) => {
 
   const handleStatusChange = async (newStatus: number) => {
     try {
-      console.log({ status: newStatus });
       const sendingData = JSON.stringify({status: newStatus});
-      const res = await axios.patch(`/books/${data?.book?.id}`, sendingData);
+      await axios.patch(`/books/${data?.book?.id}`, sendingData);
       setSelectedStatus(newStatus);
-      console.log(res.data);
     } catch (error) {
       console.error('Error updating status:', error);
     }

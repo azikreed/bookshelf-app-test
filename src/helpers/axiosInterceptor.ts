@@ -8,13 +8,28 @@ axios.interceptors.request.use((config) => {
     const method = config.method?.toUpperCase();
 
     const url = config.url;
-    const requestBody = config.data || "";
+    let requestBody;
+    if(config.data?.secret) {
+      requestBody = config.data.secret;
+    } else {
+      requestBody = config.data || "";
+    }
 
     let signstr = "";
-    if (method && url && url !== "/signup") {
-      signstr = method + url + requestBody + localStorage.getItem("secret");
+    let key = localStorage.getItem("key");
+    if (!key && config.headers.key) {
+      key = config.headers.key;
+    }
 
-      config.headers.key = localStorage.getItem('key');
+    let secret = localStorage.getItem("secret");
+    if(!secret && config.data.secret) {
+      secret = config.data.secret;
+    }
+
+    if (method && url && url !== "/signup") {
+      signstr = method + url + requestBody + secret;
+
+      config.headers.key = key;
       config.headers.sign = CryptoJS.MD5(signstr).toString();
     } else {
       localStorage.setItem("secret", config.data?.secret);
