@@ -31,7 +31,6 @@ export function CreatePopup({ onClose, onCreate, ...props }: CreatePopupProps) {
     const target = e.target as typeof e.target & CreateForm;
     const { isbn } = target;
     await sendCreate(isbn.value);
-    // onCreate();
   };
 
   const sendCreate = async (isbn: string) => {
