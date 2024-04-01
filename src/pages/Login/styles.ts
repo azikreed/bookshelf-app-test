@@ -8,25 +8,39 @@ export const AuthPage = styled("div")(({ theme }: { theme: Theme }) => ({
   width: "100%",
 }));
 
-export const Form = styled("form")(() => ({
+export const Form = styled("form")(({ theme }: { theme: Theme }) => ({
   display: "flex",
   flexDirection: "column",
   gap: "16px",
   width: "100%",
   marginTop: "36px",
   marginBottom: "12px",
+  '.invalid': {
+    input: {
+      border: `1px solid ${theme.palette.error.main}`,
+      color: `1px solid ${theme.palette.error.main}`,
+    }
+  }
 }));
 
-export const Field = styled("div")(() => ({
+export const Field = styled("div")(({ theme }: { theme: Theme }) => ({
   display: "flex",
   flexDirection: "column",
   gap: "4px",
+  ".key": {
+    border: `1px solid ${theme.palette.error.main}`,
+    color: `1px solid ${theme.palette.error.main}`,
+  },
+  ".invalid": {
+    border: `1px solid ${theme.palette.error.main}`,
+    color: `1px solid ${theme.palette.error.main}`,
+  },
 }));
 
-export const Label = styled("label")(({theme}: {theme: Theme}) => ({
-    color: theme.palette.secondary.main,
-    fontSize: '14px',
-    fontWeight: 500,
+export const Label = styled("label")(({ theme }: { theme: Theme }) => ({
+  color: theme.palette.secondary.main,
+  fontSize: "14px",
+  fontWeight: 500,
 }));
 
 export const Question = styled("p")(() => ({
@@ -35,22 +49,22 @@ export const Question = styled("p")(() => ({
   gap: "5px",
   fontSize: "14px",
   fontWeight: "300",
-  lineHeight: '120%',
+  lineHeight: "120%",
   a: {
     color: "#1B28BC",
     textDecoration: "none",
   },
 }));
 
-export const ErrorMessage = styled("div")(({theme}: {theme: Theme}) => ({
+export const ErrorMessage = styled("div")(({ theme }: { theme: Theme }) => ({
   position: "absolute",
-  padding: '10px 20px',
-  left: '10px',
-  bottom: '10px',
+  padding: "10px 20px",
+  left: "10px",
+  bottom: "10px",
   background: theme.palette.error.main,
   color: theme.palette.primary.light,
   fontSize: "14px",
   fontWeight: 400,
-  lineHeight: '120%',
-  borderRadius: '6px'
+  lineHeight: "120%",
+  borderRadius: "6px",
 }));
