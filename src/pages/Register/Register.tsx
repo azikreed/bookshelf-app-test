@@ -5,56 +5,26 @@ import { AuthPage, ErrorMessage, Field, Form, Label, Question } from "../Login/s
 import { Link } from "react-router-dom";
 import { FormEvent, useEffect, useState } from "react";
 import axios from "../../helpers/axiosInterceptor";
-// import axios from "axios";
-
-export interface RegisterForm {
-  name: {
-    value: string;
-  };
-  email: {
-    value: string;
-  };
-  key: {
-    value: string;
-  };
-  secret: {
-    value: string;
-  };
-  confirm?: {
-    value: string;
-  };
-}
-
-export interface RegisterResponse {
-  data: {
-    id: number;
-    name: string;
-    email: string;
-    key: string;
-    secret: string;
-  };
-  isOk: boolean;
-  message: string;
-}
+import cn from "classnames";
+import { RegisterForm, RegisterResponse } from "./interfaces";
 
 export const Register = () => {
   const [errorMessage, setErrorMessage] = useState(false);
+  const [validate, setValidate] = useState(false);
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
     const target = e.target as typeof e.target & RegisterForm & {};
     const { name, email, key, confirm, secret } = target;
-    console.log(
-      name.value,
-      email.value,
-      key.value,
-      confirm?.value,
-      secret.value
-    );
+    console.log(validate);
+    if (!name.value || !email.value || !key.value || !confirm?.value || !secret.value) {
+      setValidate(true);
+      return;
+    }
     if (key.value === confirm?.value) {
-      console.log("confirmed");
       await sendLogin(name.value, email.value, key.value, secret.value);
     } else {
+      setValidate(true);
       setErrorMessage(true);
       return;
     }
@@ -95,6 +65,17 @@ export const Register = () => {
     }
   }, [errorMessage]);
 
+  
+  useEffect(() => {
+    if (validate === true) {
+      let timerId = setTimeout(() => {
+        setValidate(false);
+      }, 3000);
+
+      return () => clearTimeout(timerId);
+    }
+  }, [validate]);
+
   return (
     <AuthPage>
       {errorMessage ? <ErrorMessage>Something went wrong</ErrorMessage> : <></>}
@@ -108,6 +89,9 @@ export const Register = () => {
           <CustomInput
             id="name"
             name="name"
+            className={cn({
+              ['invalid']: validate
+            })}
             placeholder="Enter your username"
           />
         </Field>
@@ -117,6 +101,9 @@ export const Register = () => {
             id="email"
             name="email"
             type="email"
+            className={cn({
+              ['invalid']: validate
+            })}
             placeholder="Enter your email"
           />
         </Field>
@@ -126,6 +113,9 @@ export const Register = () => {
             id="key"
             name="key"
             type="password"
+            className={cn({
+              ['key']: validate
+            })}
             placeholder="Enter your password"
           />
         </Field>
@@ -135,6 +125,9 @@ export const Register = () => {
             id="confirm"
             name="confirm"
             type="password"
+            className={cn({
+              ['key']: validate
+            })}
             placeholder="Confirm your password"
           />
         </Field>
@@ -144,6 +137,9 @@ export const Register = () => {
             id="secret"
             name="secret"
             type="password"
+            className={cn({
+              ['invalid']: validate
+            })}
             placeholder="Confirm your secret key"
           />
         </Field>
