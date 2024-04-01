@@ -52,3 +52,38 @@ export const CardActions = styled("div")(({ theme }: { theme: Theme }) => ({
     boxShadow: "0 6px 32px 0 rgba(21, 21, 21, 0.48)",
   },
 }));
+
+export const StatusBar = styled("div")<{selectedStatus: number}>(({ theme, selectedStatus }: { theme: Theme, selectedStatus: number }) => ({
+  padding: "2px 12px",
+  background: selectedStatus === 0
+  ? '#FF0000'
+  : selectedStatus === 1
+  ? '#FFEC43'
+  : '#00FF29',
+  color: theme.palette.primary.light,
+  borderRadius: "8.5px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+}));
+
+export const SelectDrop = styled("select")(({ theme }: { theme: Theme }) => ({
+  position: 'absolute',
+  right: 0,
+  padding: '10px 5px 10px 20px',
+  border: 'transparent',
+  color: theme.palette.primary.light,
+  background: theme.palette.primary.main,
+  borderRadius: '6px',
+  outline: 'none',
+  boxShadow: 'none',
+  fontSize: '14px',
+  ":focus": {
+    outline: 'none'
+  },
+  option: {
+    padding: '10px 0 10px 20px',
+    fontSize: '14px'
+  },
+  fontFamily: 'inherit',
+}));

@@ -2,7 +2,7 @@ import { CustomButtonProps } from "./CustomButton.props";
 import { Theme, styled } from "@mui/material/styles";
 
 
-export function CustomButton({ children, appearance = 'default', ...props }: CustomButtonProps) {
+export function CustomButton({ children, appearance = 'default',innerRef, ...props }: CustomButtonProps) {
   const StyledButton = styled('button')(({ theme }: { theme: Theme }) => ({
     padding: "10px 24px",
     cursor: 'pointer',
@@ -26,5 +26,5 @@ export function CustomButton({ children, appearance = 'default', ...props }: Cus
     borderRadius: '4px'
   }));
 
-  return <StyledButton {...props}>{children}</StyledButton>;
+  return <StyledButton ref={innerRef} {...props}>{children}</StyledButton>;
 }

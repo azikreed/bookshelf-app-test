@@ -1,6 +1,7 @@
-import { ButtonHTMLAttributes, ReactNode } from 'react';
+import { ButtonHTMLAttributes, ReactNode, RefObject } from 'react';
 
 export interface CustomButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     children: ReactNode;
-    appearance?: 'transparent' | 'default' 
+    appearance?: 'transparent' | 'default';
+    innerRef?: RefObject<HTMLButtonElement>;
 }
